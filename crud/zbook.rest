@@ -1,0 +1,24 @@
+### USER ENDPOINT ### 
+
+@baseUrl = http://localhost:3000
+
+###
+
+GET {{baseUrl}}/book
+?limit=4
+&offset=0
+
+###
+
+GET {{baseUrl}}/book/46262952-4edd-4d86-9611-3bc38fdaeb95
+
+###
+
+POST {{baseUrl}}/book
+Content-Type: application/json
+
+{
+    "author": "George Orwell",
+    "price": 50.00,
+    "title": "Abcdef"
+}

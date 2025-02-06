@@ -1,0 +1,52 @@
+### USER ENDPOINT ### 
+
+@baseUrl = http://localhost:3000
+
+###
+
+GET {{baseUrl}}/user
+
+###
+
+GET {{baseUrl}}/user/7060515f-f6fb-4a93-a563-4e40359cbae3
+
+###
+
+PUT {{baseUrl}}/user?userUUID=d9cda987-e3e6-4e02-9aac-773ca7787f64
+Content-Type: application/json
+
+{
+    "name": "Cobebel"
+}
+
+###
+
+PUT {{baseUrl}}/user/remove-book?userUUID=919211d2-25ea-4225-b164-b82ab929600b
+Content-Type: application/json
+
+{
+    "bookUUID": "6105958b-e517-4e09-b296-1224d607a6a8"
+}
+
+###
+
+POST {{baseUrl}}/user
+Content-Type: application/json
+
+{
+    "name": "Cobel",
+    "password": "1234"
+}
+
+###
+
+DELETE {{baseUrl}}/user?userUUID=34340a28-4ec9-4afe-8202-966c8c243eb4
+
+###
+
+POST {{baseUrl}}/user/append-book?userUUID=34340a28-4ec9-4afe-8202-966c8c243eb4
+Content-Type: application/json
+
+{
+    "bookUUID": "9dd9d9f7-92fa-4774-b326-41441b5acd86"
+}
