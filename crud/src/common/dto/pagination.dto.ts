@@ -14,4 +14,6 @@ export class PaginatioDTO {
     @IsOptional()
     @Type(() => Number)
     public readonly offset: number;
+
+    public readonly reqHost: string;
 }

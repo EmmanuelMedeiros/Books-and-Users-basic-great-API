@@ -51,7 +51,7 @@ export class BookService {
       const pagination: Pagination = new Pagination(
         paginationDTO.limit,
         paginationDTO.offset,
-        'book',
+        `${paginationDTO.reqHost}/book`,
         Number(books[1])
       )
   
@@ -62,7 +62,7 @@ export class BookService {
         lastPage: pagination.lastPage()
       };
 
-      if(!paginationDTO.offset || !paginationDTO.limit) {
+      if(!paginationDTO.limit) {
         return endMessage = {data: books[0], status: HttpStatus.OK};
       };
   

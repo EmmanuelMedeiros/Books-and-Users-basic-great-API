@@ -14,19 +14,21 @@ export class Pagination {
         @Type(() => Number)
         public offset: number;
 
-        public urlSuffix: string;
+        public reqHost: string;
+
+        public url: string;
 
         public numberOfElements: number;
 
-        constructor(limit: number, offset: number, urlSuffix: string, numberOfElements: number) {
+        constructor(limit: number, offset: number, url: string, numberOfElements: number) {
             this.limit = Number(limit),
             this.offset = Number(offset),
-            this.urlSuffix = urlSuffix,
+            this.url = url,
             this.numberOfElements = Number(numberOfElements);
         }
 
         firstPage(): string {
-            return `http://localhost:3000/${this.urlSuffix}?limit=${this.limit}&offset=0`;
+            return `${this.url}?limit=${this.limit}&offset=0`;
         }
 
         previousPage(): string|null {
@@ -34,7 +36,7 @@ export class Pagination {
             if(previousOffset < 0) {
                 return null
             };
-            return `http://localhost:3000/${this.urlSuffix}?limit=${this.limit}&offset=${previousOffset}`;
+            return `http://${this.url}?limit=${this.limit}&offset=${previousOffset}`;
         };
 
         nextPage(): string|null {
@@ -44,12 +46,12 @@ export class Pagination {
                 return null;
             };
 
-            return `http://localhost:3000/${this.urlSuffix}?limit=${this.limit}&offset=${nextOffset}`
+            return `http://${this.url}?limit=${this.limit}&offset=${nextOffset}`
         };
 
         lastPage(): string {
             const totalNumberOfPages: number = Math.ceil(this.numberOfElements / this.limit);
             const lastOffset: number = (this.limit * totalNumberOfPages) - this.limit
-            return `http://localhost:3000/${this.urlSuffix}?limit=${this.limit}&offset=${lastOffset}`;
+            return `http://${this.url}?limit=${this.limit}&offset=${lastOffset}`;
         }
 }

@@ -1,9 +1,10 @@
 export declare class Pagination {
     limit: number;
     offset: number;
-    urlSuffix: string;
+    reqHost: string;
+    url: string;
     numberOfElements: number;
-    constructor(limit: number, offset: number, urlSuffix: string, numberOfElements: number);
+    constructor(limit: number, offset: number, url: string, numberOfElements: number);
     firstPage(): string;
     previousPage(): string | null;
     nextPage(): string | null;

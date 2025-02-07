@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Query, HttpCode } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Query, HttpCode, Request } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -14,7 +14,12 @@ export class BookController {
 
   @HttpCode(HttpStatus.OK)
   @Get()
-  async findAll(@Query() pagination: PaginatioDTO) {
+  async findAll(@Query() paginationDTO: PaginatioDTO, @Request() req) {
+    const pagination: PaginatioDTO = {
+      limit: paginationDTO.limit,
+      offset: paginationDTO.offset,
+      reqHost: req.host
+    }
     const serviceResponse: EndMessage = await this.bookService.findAll(pagination);
     if(serviceResponse.status !== HttpStatus.OK) {
       throw new HttpException(serviceResponse.data, HttpStatus.BAD_REQUEST);

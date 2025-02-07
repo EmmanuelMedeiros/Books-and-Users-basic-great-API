@@ -21,7 +21,12 @@ let BookController = class BookController {
     constructor(bookService) {
         this.bookService = bookService;
     }
-    async findAll(pagination) {
+    async findAll(paginationDTO, req) {
+        const pagination = {
+            limit: paginationDTO.limit,
+            offset: paginationDTO.offset,
+            reqHost: req.host
+        };
         const serviceResponse = await this.bookService.findAll(pagination);
         if (serviceResponse.status !== common_1.HttpStatus.OK) {
             throw new common_1.HttpException(serviceResponse.data, common_1.HttpStatus.BAD_REQUEST);
@@ -48,8 +53,9 @@ __decorate([
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [pagination_dto_1.PaginatioDTO]),
+    __metadata("design:paramtypes", [pagination_dto_1.PaginatioDTO, Object]),
     __metadata("design:returntype", Promise)
 ], BookController.prototype, "findAll", null);
 __decorate([

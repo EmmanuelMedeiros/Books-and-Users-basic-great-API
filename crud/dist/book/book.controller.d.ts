@@ -6,7 +6,7 @@ import { PaginatioDTO } from 'src/common/dto/pagination.dto';
 export declare class BookController {
     private readonly bookService;
     constructor(bookService: BookService);
-    findAll(pagination: PaginatioDTO): Promise<EndMessage>;
+    findAll(paginationDTO: PaginatioDTO, req: any): Promise<EndMessage>;
     findOne(uuid: string): Promise<Book>;
     create(createBookDTO: CreateBookDto): Promise<EndMessage>;
 }

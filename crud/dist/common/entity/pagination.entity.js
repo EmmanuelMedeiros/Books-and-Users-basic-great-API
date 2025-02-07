@@ -13,14 +13,14 @@ exports.Pagination = void 0;
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 class Pagination {
-    constructor(limit, offset, urlSuffix, numberOfElements) {
+    constructor(limit, offset, url, numberOfElements) {
         this.limit = Number(limit),
             this.offset = Number(offset),
-            this.urlSuffix = urlSuffix,
+            this.url = url,
             this.numberOfElements = Number(numberOfElements);
     }
     firstPage() {
-        return `http://localhost:3000/${this.urlSuffix}?limit=${this.limit}&offset=0`;
+        return `${this.url}?limit=${this.limit}&offset=0`;
     }
     previousPage() {
         const previousOffset = this.offset - this.limit;
@@ -28,7 +28,7 @@ class Pagination {
             return null;
         }
         ;
-        return `http://localhost:3000/${this.urlSuffix}?limit=${this.limit}&offset=${previousOffset}`;
+        return `http://${this.url}?limit=${this.limit}&offset=${previousOffset}`;
     }
     ;
     nextPage() {
@@ -38,13 +38,13 @@ class Pagination {
             return null;
         }
         ;
-        return `http://localhost:3000/${this.urlSuffix}?limit=${this.limit}&offset=${nextOffset}`;
+        return `http://${this.url}?limit=${this.limit}&offset=${nextOffset}`;
     }
     ;
     lastPage() {
         const totalNumberOfPages = Math.ceil(this.numberOfElements / this.limit);
         const lastOffset = (this.limit * totalNumberOfPages) - this.limit;
-        return `http://localhost:3000/${this.urlSuffix}?limit=${this.limit}&offset=${lastOffset}`;
+        return `http://${this.url}?limit=${this.limit}&offset=${lastOffset}`;
     }
 }
 exports.Pagination = Pagination;

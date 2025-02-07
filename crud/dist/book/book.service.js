@@ -43,14 +43,14 @@ let BookService = class BookService {
                 skip: paginationDTO.offset,
                 order: { title: 'DESC' }
             });
-            const pagination = new pagination_entity_1.Pagination(paginationDTO.limit, paginationDTO.offset, 'book', Number(books[1]));
+            const pagination = new pagination_entity_1.Pagination(paginationDTO.limit, paginationDTO.offset, `${paginationDTO.reqHost}/book`, Number(books[1]));
             const paginationObject = {
                 firstPage: pagination.firstPage(),
                 previousPage: pagination.previousPage(),
                 nextPage: pagination.nextPage(),
                 lastPage: pagination.lastPage()
             };
-            if (!paginationDTO.offset || !paginationDTO.limit) {
+            if (!paginationDTO.limit) {
                 return endMessage = { data: books[0], status: common_1.HttpStatus.OK };
             }
             ;
