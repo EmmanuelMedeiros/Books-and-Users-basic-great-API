@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const book_service_1 = require("./book.service");
 const create_book_dto_1 = require("./dto/create-book.dto");
 const pagination_dto_1 = require("../common/dto/pagination.dto");
+const cacheInterceptor_1 = require("../common/interceptor/cacheInterceptor");
 let BookController = class BookController {
     constructor(bookService) {
         this.bookService = bookService;
@@ -50,6 +51,7 @@ let BookController = class BookController {
 };
 exports.BookController = BookController;
 __decorate([
+    (0, common_1.UseInterceptors)(cacheInterceptor_1.CacheInterceptor),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)()),

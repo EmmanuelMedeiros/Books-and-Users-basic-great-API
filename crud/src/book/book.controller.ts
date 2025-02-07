@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Query, HttpCode, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Query, HttpCode, Request, UseInterceptors } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -7,11 +7,13 @@ import { Book } from './entities/book.entity';
 import * as crypto from 'crypto';
 import { EndMessage } from 'src/interface/EndMessage';
 import { PaginatioDTO } from 'src/common/dto/pagination.dto';
+import { CacheInterceptor } from 'src/common/interceptor/cacheInterceptor';
 
 @Controller('book')
 export class BookController {
   constructor(private readonly bookService: BookService) {}
 
+  @UseInterceptors(CacheInterceptor)
   @HttpCode(HttpStatus.OK)
   @Get()
   async findAll(@Query() paginationDTO: PaginatioDTO, @Request() req) {
