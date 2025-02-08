@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Post, Put, Query, UseGuards, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './entity/user.entity';
 import { CreateUserDTO } from './dto/create-user.dto';
@@ -9,6 +9,7 @@ import { Book } from 'src/book/entities/book.entity';
 import { BookService } from 'src/book/book.service';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import { AuthorizationInterceptor } from 'src/common/interceptor/authorizationInterceptor';
+import { RoleGuard } from 'src/common/guard/role.guard';
 
 @Controller('user')
 export class UserController {
@@ -17,7 +18,6 @@ export class UserController {
         private readonly bookService: BookService
     ) {}
 
-    @UseInterceptors(AuthorizationInterceptor)
     @HttpCode(HttpStatus.OK)
     @Get()
     async findAll() {
@@ -28,6 +28,7 @@ export class UserController {
         return userList;
     } 
 
+    @UseGuards(new RoleGuard(['admin']))
     @HttpCode(HttpStatus.OK)
     @Get('/:uuid')
     async findOne(@Param('uuid') uuid: string) {

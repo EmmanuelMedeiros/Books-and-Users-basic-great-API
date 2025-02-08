@@ -13,7 +13,12 @@ const app_service_1 = require("./app.service");
 const user_module_1 = require("./user/user.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const book_module_1 = require("./book/book.module");
+const getUser_middleware_1 = require("./common/middleware/getUser.middleware");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply(getUser_middleware_1.GetUserMiddleware)
+            .forRoutes('*');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([

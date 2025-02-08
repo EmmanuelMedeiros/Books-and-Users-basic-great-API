@@ -5,6 +5,7 @@
 ###
 
 GET {{baseUrl}}/user
+Authorization: Bearer ola
 
 ###
 
