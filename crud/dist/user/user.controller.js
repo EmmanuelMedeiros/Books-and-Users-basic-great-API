@@ -18,6 +18,7 @@ const user_service_1 = require("./user.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const book_service_1 = require("../book/book.service");
 const update_user_dto_1 = require("./dto/update-user.dto");
+const authorizationInterceptor_1 = require("../common/interceptor/authorizationInterceptor");
 let UserController = class UserController {
     constructor(userService, bookService) {
         this.userService = userService;
@@ -100,6 +101,7 @@ let UserController = class UserController {
 };
 exports.UserController = UserController;
 __decorate([
+    (0, common_1.UseInterceptors)(authorizationInterceptor_1.AuthorizationInterceptor),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     (0, common_1.Get)(),
     __metadata("design:type", Function),

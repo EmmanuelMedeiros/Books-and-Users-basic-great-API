@@ -7,7 +7,6 @@ import { CreateUserDTO } from './dto/create-user.dto';
 
 import * as crypto from 'crypto';
 import { Book } from 'src/book/entities/book.entity';
-import { UpdateBookDto } from 'src/book/dto/update-book.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
 
 @Injectable()

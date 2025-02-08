@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BookModule } from './book/book.module';
-import { UserBooksModule } from './user-books/user-books.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
