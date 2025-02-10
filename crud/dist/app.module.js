@@ -14,6 +14,7 @@ const user_module_1 = require("./user/user.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const book_module_1 = require("./book/book.module");
 const getUser_middleware_1 = require("./common/middleware/getUser.middleware");
+const config_1 = require("@nestjs/config");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(getUser_middleware_1.GetUserMiddleware)
@@ -23,13 +24,14 @@ let AppModule = class AppModule {
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forRoot({
+        imports: [config_1.ConfigModule.forRoot(),
+            typeorm_1.TypeOrmModule.forRoot({
                 type: 'postgres',
-                host: 'localhost',
-                port: 5432,
-                username: 'postgres',
-                password: 'admin',
-                database: 'postgres',
+                host: process.env.DB_HOST,
+                port: Number(process.env.DB_PORT),
+                username: process.env.DB_USERNAME,
+                password: process.env.DB_PASSWORD,
+                database: process.env.DB_DATABASE,
                 synchronize: true,
                 autoLoadEntities: true
             }), user_module_1.UserModule, book_module_1.BookModule],
