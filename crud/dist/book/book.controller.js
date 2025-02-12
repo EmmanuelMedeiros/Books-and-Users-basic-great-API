@@ -16,13 +16,13 @@ exports.BookController = void 0;
 const common_1 = require("@nestjs/common");
 const book_service_1 = require("./book.service");
 const create_book_dto_1 = require("./dto/create-book.dto");
-const pagination_dto_1 = require("../common/dto/pagination.dto");
+const create_pagination_dto_1 = require("../common/dto/create-pagination.dto");
 let BookController = class BookController {
     constructor(bookService) {
         this.bookService = bookService;
     }
-    async findAll(pagination) {
-        const serviceResponse = await this.bookService.findAll(pagination);
+    async findAll(createPaginationDTO) {
+        const serviceResponse = await this.bookService.findAll(createPaginationDTO);
         if (serviceResponse.status !== common_1.HttpStatus.OK) {
             throw new common_1.HttpException(serviceResponse.data, common_1.HttpStatus.BAD_REQUEST);
         }
@@ -49,7 +49,7 @@ __decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [pagination_dto_1.PaginatioDTO]),
+    __metadata("design:paramtypes", [create_pagination_dto_1.CreatePaginationDTO]),
     __metadata("design:returntype", Promise)
 ], BookController.prototype, "findAll", null);
 __decorate([

@@ -18,10 +18,12 @@ const typeorm_1 = require("@nestjs/typeorm");
 const book_entity_1 = require("./entities/book.entity");
 const typeorm_2 = require("typeorm");
 const crypto = require("crypto");
-const pagination_entity_1 = require("../common/entity/pagination.entity");
+const paginationRequirements_entity_1 = require("../common/pagination/entity/paginationRequirements.entity");
+const pagination_service_1 = require("../common/pagination/service/pagination.service");
 let BookService = class BookService {
-    constructor(bookRepository) {
+    constructor(bookRepository, paginationService) {
         this.bookRepository = bookRepository;
+        this.paginationService = paginationService;
     }
     async create(createBookDTO) {
         let endMessage = { data: '', status: common_1.HttpStatus.OK };
@@ -35,26 +37,17 @@ let BookService = class BookService {
         }
         return endMessage;
     }
-    async findAll(paginationDTO) {
+    async findAll(createPaginationDTO) {
         let endMessage = { data: '', status: common_1.HttpStatus.OK };
         try {
             const books = await this.bookRepository.findAndCount({
-                take: paginationDTO.limit,
-                skip: paginationDTO.offset,
+                take: createPaginationDTO.limit,
+                skip: createPaginationDTO.offset,
                 order: { title: 'DESC' }
             });
-            const pagination = new pagination_entity_1.Pagination(paginationDTO.limit, paginationDTO.offset, 'book', Number(books[1]));
-            const paginationObject = {
-                firstPage: pagination.firstPage(),
-                previousPage: pagination.previousPage(),
-                nextPage: pagination.nextPage(),
-                lastPage: pagination.lastPage()
-            };
-            if (!paginationDTO.offset || !paginationDTO.limit) {
-                return endMessage = { data: books[0], status: common_1.HttpStatus.OK };
-            }
-            ;
-            return endMessage = { data: { contentList: books[0], pagination: paginationObject }, status: common_1.HttpStatus.OK };
+            const paginationRequirements = new paginationRequirements_entity_1.PaginationRequirements(createPaginationDTO.limit, books[1], createPaginationDTO.offset, createPaginationDTO.urlSuffix);
+            const pagination = this.paginationService.paginate(paginationRequirements);
+            return endMessage = { data: { contentList: books[0], pagination: pagination }, status: common_1.HttpStatus.OK };
         }
         catch (err) {
             endMessage = { data: err.toString(), status: common_1.HttpStatus.BAD_REQUEST };
@@ -74,6 +67,7 @@ exports.BookService = BookService;
 exports.BookService = BookService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(book_entity_1.Book)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        pagination_service_1.PaginationService])
 ], BookService);
 //# sourceMappingURL=book.service.js.map

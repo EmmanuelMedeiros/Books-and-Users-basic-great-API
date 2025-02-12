@@ -1,8 +1,7 @@
 import { Type } from "class-transformer";
 import { IsInt, IsOptional, Length, Min,  } from "class-validator";
-import { IsNull } from "typeorm";
 
-export class PaginatioDTO {
+export class CreatePaginationDTO {
     @Min(1)
     @IsInt()
     @IsOptional()
@@ -14,4 +13,6 @@ export class PaginatioDTO {
     @IsOptional()
     @Type(() => Number)
     public readonly offset: number;
+
+    public readonly urlSuffix: string;
 }

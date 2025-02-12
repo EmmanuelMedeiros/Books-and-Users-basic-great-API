@@ -7,15 +7,17 @@ import { Repository } from 'typeorm';
 import { EndMessage } from 'src/interface/EndMessage';
 
 import * as crypto from 'crypto';
-import { PaginatioDTO } from 'src/common/dto/pagination.dto';
-import { Pagination } from 'src/common/entity/pagination.entity';
-import { IPaginationReturn } from 'src/interface/IPaginationReturn';
+import { CreatePaginationDTO } from 'src/common/dto/create-pagination.dto';
+import { PaginationRequirements } from 'src/common/pagination/entity/paginationRequirements.entity';
+import { PaginationService } from 'src/common/pagination/service/pagination.service';
+import { Pagination } from 'src/common/pagination/entity/pagination.entity';
 
 @Injectable()
 export class BookService {
   constructor(
     @InjectRepository(Book)
-    private readonly bookRepository: Repository<Book>
+    private readonly bookRepository: Repository<Book>,
+    private readonly paginationService: PaginationService
   ) {}
 
   async create(createBookDTO: CreateBookDto) {
@@ -38,35 +40,26 @@ export class BookService {
     return endMessage;
   }
 
-  async findAll(paginationDTO: PaginatioDTO): Promise<EndMessage> {
+  async findAll(createPaginationDTO: CreatePaginationDTO): Promise<EndMessage> {
 
     let endMessage: EndMessage = {data: '', status: HttpStatus.OK};
     try{
       const books: [Book[], number] = await this.bookRepository.findAndCount({
-        take:paginationDTO.limit,
-        skip:paginationDTO.offset,
+        take:createPaginationDTO.limit,
+        skip:createPaginationDTO.offset,
         order: {title: 'DESC'}
       });
 
-      const pagination: Pagination = new Pagination(
-        paginationDTO.limit,
-        paginationDTO.offset,
-        'book',
-        Number(books[1])
-      )
-  
-      const paginationObject: IPaginationReturn = {
-        firstPage: pagination.firstPage(),
-        previousPage: pagination.previousPage(),
-        nextPage: pagination.nextPage(),
-        lastPage: pagination.lastPage()
-      };
+      const paginationRequirements: PaginationRequirements = new PaginationRequirements(
+        createPaginationDTO.limit,
+        books[1],
+        createPaginationDTO.offset,
+        createPaginationDTO.urlSuffix
+      );
 
-      if(!paginationDTO.offset || !paginationDTO.limit) {
-        return endMessage = {data: books[0], status: HttpStatus.OK};
-      };
+      const pagination: Pagination = this.paginationService.paginate(paginationRequirements);
   
-      return endMessage = {data: {contentList: books[0], pagination: paginationObject}, status: HttpStatus.OK}
+      return endMessage = {data: {contentList: books[0], pagination: pagination}, status: HttpStatus.OK}
     }
     catch(err) {
       endMessage = {data: err.toString(), status: HttpStatus.BAD_REQUEST};

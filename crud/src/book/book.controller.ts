@@ -6,7 +6,7 @@ import { Book } from './entities/book.entity';
 
 import * as crypto from 'crypto';
 import { EndMessage } from 'src/interface/EndMessage';
-import { PaginatioDTO } from 'src/common/dto/pagination.dto';
+import { CreatePaginationDTO } from 'src/common/dto/create-pagination.dto';
 
 @Controller('book')
 export class BookController {
@@ -14,8 +14,8 @@ export class BookController {
 
   @HttpCode(HttpStatus.OK)
   @Get()
-  async findAll(@Query() pagination: PaginatioDTO) {
-    const serviceResponse: EndMessage = await this.bookService.findAll(pagination);
+  async findAll(@Query() createPaginationDTO: CreatePaginationDTO) {
+    const serviceResponse: EndMessage = await this.bookService.findAll(createPaginationDTO);
     if(serviceResponse.status !== HttpStatus.OK) {
       throw new HttpException(serviceResponse.data, HttpStatus.BAD_REQUEST);
     }
