@@ -1,10 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Query, HttpCode } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
-import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from './entities/book.entity';
 
-import * as crypto from 'crypto';
 import { EndMessage } from 'src/interface/EndMessage';
 import { CreatePaginationDTO } from 'src/common/dto/create-pagination.dto';
 

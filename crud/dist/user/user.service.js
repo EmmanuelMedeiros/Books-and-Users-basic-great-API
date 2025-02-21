@@ -25,7 +25,11 @@ let UserService = class UserService {
     }
     ;
     async findAll() {
-        const userList = await this.userRepository.find();
+        const userList = await this.userRepository.find({
+            relations: {
+                books: true
+            }
+        });
         return userList;
     }
     async findOne(uuid) {

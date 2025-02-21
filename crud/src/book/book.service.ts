@@ -50,16 +50,18 @@ export class BookService {
         order: {title: 'DESC'}
       });
 
-      const paginationRequirements: PaginationRequirements = new PaginationRequirements(
-        createPaginationDTO.limit,
-        books[1],
-        createPaginationDTO.offset,
-        createPaginationDTO.urlSuffix
-      );
-
-      const pagination: Pagination = this.paginationService.paginate(paginationRequirements);
-  
-      return endMessage = {data: {contentList: books[0], pagination: pagination}, status: HttpStatus.OK}
+      if(!createPaginationDTO.limit || !createPaginationDTO.offset) {
+        return endMessage = {data: {content: books[0]}, status: HttpStatus.OK}
+      } else {
+        const paginationRequirements: PaginationRequirements = new PaginationRequirements(
+          createPaginationDTO.limit,
+          books[1],
+          createPaginationDTO.offset,
+          createPaginationDTO.urlSuffix
+        );
+        const pagination: Pagination = this.paginationService.paginate(paginationRequirements);
+        return endMessage = {data: {contentList: books[0], pagination: pagination}, status: HttpStatus.OK}
+      }
     }
     catch(err) {
       endMessage = {data: err.toString(), status: HttpStatus.BAD_REQUEST};

@@ -18,7 +18,13 @@ export class UserService {
     ) {};
 
     async findAll(): Promise<User[]|null> {
-        const userList: User[] = await this.userRepository.find();
+        const userList: User[] = await this.userRepository.find(
+            {
+                relations: {
+                    books: true
+                }
+            }
+        );
         return userList;
     }
 

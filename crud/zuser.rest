@@ -8,7 +8,7 @@ GET {{baseUrl}}/user
 
 ###
 
-GET {{baseUrl}}/user/7060515f-f6fb-4a93-a563-4e40359cbae3
+GET {{baseUrl}}/user/919211d2-25ea-4225-b164-b82ab929600b
 
 ###
 
@@ -44,7 +44,7 @@ DELETE {{baseUrl}}/user?userUUID=34340a28-4ec9-4afe-8202-966c8c243eb4
 
 ###
 
-POST {{baseUrl}}/user/append-book?userUUID=34340a28-4ec9-4afe-8202-966c8c243eb4
+POST {{baseUrl}}/user/append-book?userUUID=919211d2-25ea-4225-b164-b82ab929600b
 Content-Type: application/json
 
 {
