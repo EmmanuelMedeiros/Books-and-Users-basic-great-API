@@ -5,6 +5,8 @@
 ###
 
 GET {{baseUrl}}/book
+?limit=4
+&offset=0
 
 ###
 

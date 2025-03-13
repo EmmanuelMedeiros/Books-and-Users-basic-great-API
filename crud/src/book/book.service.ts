@@ -43,7 +43,11 @@ export class BookService {
   async findAll(createPaginationDTO: CreatePaginationDTO): Promise<EndMessage> {
 
     let endMessage: EndMessage = {data: '', status: HttpStatus.OK};
+
     try{
+
+      console.log(createPaginationDTO.limit)
+
       const books: [Book[], number] = await this.bookRepository.findAndCount({
         take:createPaginationDTO.limit,
         skip:createPaginationDTO.offset,
@@ -57,8 +61,9 @@ export class BookService {
           createPaginationDTO.limit,
           books[1],
           createPaginationDTO.offset,
-          createPaginationDTO.urlSuffix
+          'book'
         );
+
         const pagination: Pagination = this.paginationService.paginate(paginationRequirements);
         return endMessage = {data: {contentList: books[0], pagination: pagination}, status: HttpStatus.OK}
       }

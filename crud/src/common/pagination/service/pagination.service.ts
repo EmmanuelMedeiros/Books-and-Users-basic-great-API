@@ -4,6 +4,8 @@ import { PaginationRequirements } from "../entity/paginationRequirements.entity"
 
 @Injectable()
 export class PaginationService {
+
+    
     paginate(paginationRequirements: PaginationRequirements): Pagination {
         const pagination: Pagination = new Pagination(
             this.firstPage(paginationRequirements),

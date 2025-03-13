@@ -40,6 +40,7 @@ let BookService = class BookService {
     async findAll(createPaginationDTO) {
         let endMessage = { data: '', status: common_1.HttpStatus.OK };
         try {
+            console.log(createPaginationDTO.limit);
             const books = await this.bookRepository.findAndCount({
                 take: createPaginationDTO.limit,
                 skip: createPaginationDTO.offset,
@@ -49,7 +50,7 @@ let BookService = class BookService {
                 return endMessage = { data: { content: books[0] }, status: common_1.HttpStatus.OK };
             }
             else {
-                const paginationRequirements = new paginationRequirements_entity_1.PaginationRequirements(createPaginationDTO.limit, books[1], createPaginationDTO.offset, createPaginationDTO.urlSuffix);
+                const paginationRequirements = new paginationRequirements_entity_1.PaginationRequirements(createPaginationDTO.limit, books[1], createPaginationDTO.offset, 'book');
                 const pagination = this.paginationService.paginate(paginationRequirements);
                 return endMessage = { data: { contentList: books[0], pagination: pagination }, status: common_1.HttpStatus.OK };
             }
