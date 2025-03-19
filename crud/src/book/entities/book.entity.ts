@@ -1,6 +1,5 @@
-import { IsNumber, Length } from "class-validator";
+import { Length } from "class-validator";
 import { IBook } from "src/interface/IBook";
-import { UserBooks } from "src/user-books/entity/user-books.entity";
 import { User } from "src/user/entity/user.entity";
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 

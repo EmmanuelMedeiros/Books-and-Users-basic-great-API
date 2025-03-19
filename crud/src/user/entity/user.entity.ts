@@ -1,7 +1,6 @@
 import { Book } from "src/book/entities/book.entity";
 import { IUser } from "src/interface/IUser";
-import { UserBooks } from "src/user-books/entity/user-books.entity";
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn } from "typeorm";
 
 @Entity('user')
 export class User implements IUser {
