@@ -5,14 +5,16 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BookModule } from './book/book.module';
 
+console.log(process.env.DB_DATABASE)
+
 @Module({
   imports: [TypeOrmModule.forRoot({
     type: 'postgres',
-    host: 'localhost',
-    port: 5432,
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
     username: 'postgres',
-    password: 'admin',
-    database: 'postgres',
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
     synchronize: true,
     autoLoadEntities: true
   }), UserModule, BookModule],

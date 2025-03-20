@@ -1,0 +1,30 @@
+services:
+
+  postgres:
+    image: postgres:14
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "2345:5432"
+    networks:
+      - books-and-users
+    env_file:
+      - db.env
+
+  back-end:
+    build: ./crud
+    ports:
+      - 4000:4000
+    networks:
+      - books-and-users
+    env_file:
+      - ./crud/.env
+    depends_on:
+      - postgres
+
+networks:
+  books-and-users:
+    driver: "bridge"
+
+volumes:
+  pg_data: {}
